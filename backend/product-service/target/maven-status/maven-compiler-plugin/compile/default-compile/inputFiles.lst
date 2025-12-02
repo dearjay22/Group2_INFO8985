@@ -1,0 +1,4 @@
+/workspaces/Group2_PROG8870/backend/product-service/src/main/java/obsshop/product/ProductServiceApplication.java
+/workspaces/Group2_PROG8870/backend/product-service/src/main/java/obsshop/product/controller/ProductController.java
+/workspaces/Group2_PROG8870/backend/product-service/src/main/java/obsshop/product/model/Product.java
+/workspaces/Group2_PROG8870/backend/product-service/src/main/java/obsshop/product/repo/ProductRepository.java
