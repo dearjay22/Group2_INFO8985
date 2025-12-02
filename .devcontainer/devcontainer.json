@@ -1,0 +1,9 @@
+{
+  "name": "ObsShop DevContainer",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [3000,3001,8080,8081,8082,8083,8761,9090,3002,4317,3301],
+  "postCreateCommand": "sudo service docker start || true"
+}
