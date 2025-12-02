@@ -9,3 +9,4 @@ y# Group2_PROG8870
 -- cd frontend
 -- npx create-react-app shell-app
 -- npx create-react-app products-mf
+-- updated files 
