@@ -1,0 +1,4 @@
+com/obsshop/order/controller/OrderController.class
+com/obsshop/order/OrderServiceApplication.class
+com/obsshop/order/model/Order.class
+com/obsshop/order/repo/OrderRepository.class

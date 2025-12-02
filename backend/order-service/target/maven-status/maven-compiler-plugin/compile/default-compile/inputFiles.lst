@@ -1,0 +1,4 @@
+/workspaces/Group2_PROG8870/backend/order-service/src/main/java/com/obsshop/order/OrderServiceApplication.java
+/workspaces/Group2_PROG8870/backend/order-service/src/main/java/com/obsshop/order/controller/OrderController.java
+/workspaces/Group2_PROG8870/backend/order-service/src/main/java/com/obsshop/order/model/Order.java
+/workspaces/Group2_PROG8870/backend/order-service/src/main/java/com/obsshop/order/repo/OrderRepository.java
