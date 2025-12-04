@@ -1,0 +1,4 @@
+com/obsshop/product/controller/ProductController.class
+com/obsshop/product/model/Product.class
+com/obsshop/product/repo/ProductRepository.class
+com/obsshop/product/ProductServiceApplication.class
