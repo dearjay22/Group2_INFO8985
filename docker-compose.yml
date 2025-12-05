@@ -19,29 +19,17 @@ services:
     depends_on: ["db","discovery-service"]
     ports: ["8082:8082"]
   api-gateway:
-    build:
-      context: ./backend/api-gateway
-      dockerfile: Dockerfile
-    image: group2/api-gateway:latest
-    container_name: api-gateway
-    depends_on:
-      - product-service
-      - order-service
-      - discovery-service
-    ports:
-      - "8080:8080"
+    build: ./backend/api-gateway
+    depends_on: ["product-service", "order-service","discovery-service"]
+    ports: ["8080:8080"]
   shell-app:
     build: ./frontend/shell-app
-    ports:
-      - "3000:80"      # Nginx serves on port 80 inside container
-    depends_on:
-      - api-gateway
+    depends_on: ["api-gateway"]
+    ports: ["3000:80"]
   products-mf:
     build: ./frontend/products-mf
-    ports:
-      - "3001:80"      # Nginx serves on port 80 inside container
-    depends_on:
-      - api-gateway
+    depends_on: ["api-gateway"]
+    ports: ["3001:80"]
   prometheus:
     image: prom/prometheus
     volumes:
