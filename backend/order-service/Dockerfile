@@ -1,6 +1,5 @@
-FROM eclipse-temurin:21-jre-alpine
-ARG JAR_FILE=target/*.jar
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
-COPY ${JAR_FILE} app.jar
+COPY ./target/*.jar app.jar
 EXPOSE 8082
 ENTRYPOINT ["java","-jar","/app/app.jar"]

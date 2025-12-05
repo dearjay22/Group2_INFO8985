@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+# Gateway routes - forward to services by Docker service name / host and port.
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: http://product-service:8081
+          predicates:
+            - Path=/api/products/**, /products/**
+          filters:
+            - StripPrefix=1
+
+        - id: order-service
+          uri: http://order-service:8082
+          predicates:
+            - Path=/api/orders/**, /orders/**
+          filters:
+            - StripPrefix=1
+
+        - id: discovery-service
+          uri: http://discovery-service:8761
+          predicates:
+            - Path=/eureka/**, /discovery/**
+          filters:
+            - RewritePath=/discovery/(?<segment>.*), /$\\{segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env
+  endpoint:
+    health:
+      show-details: always
