@@ -5,37 +5,38 @@ spring:
   application:
     name: api-gateway
 
-# Gateway routes - forward to services by Docker service name / host and port.
-spring:
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true   # automatically routes using Eureka
+
       routes:
         - id: product-service
           uri: http://product-service:8081
           predicates:
-            - Path=/api/products/**, /products/**
-          filters:
-            - StripPrefix=1
+            - Path=/products/**
 
         - id: order-service
           uri: http://order-service:8082
           predicates:
-            - Path=/api/orders/**, /orders/**
-          filters:
-            - StripPrefix=1
+            - Path=/orders/**
 
-        - id: discovery-service
-          uri: http://discovery-service:8761
-          predicates:
-            - Path=/eureka/**, /discovery/**
-          filters:
-            - RewritePath=/discovery/(?<segment>.*), /$\\{segment}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,env
-  endpoint:
-    health:
-      show-details: always
+        include: health,info,metrics,prometheus
+  tracing:
+    sampling:
+      probability: 1.0
+
+otel:
+  exporter:
+    otlp:
+      endpoint: http://signoz-otel-collector:4317
