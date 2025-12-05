@@ -19,9 +19,19 @@ services:
     depends_on: ["db","discovery-service"]
     ports: ["8082:8082"]
   api-gateway:
-    build: ./backend/api-gateway
-    depends_on: ["discovery-service"]
-    ports: ["8080:8080"]
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    image: group2/api-gateway:latest
+    container_name: api-gateway
+    depends_on:
+      - product-service
+      - order-service
+      - discovery-service
+    ports:
+      - "8080:8080"
+    networks:
+      - group-net
   shell-app:
     build: ./frontend/shell-app
     ports: ["3000:3000"]
