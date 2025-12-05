@@ -30,8 +30,6 @@ services:
       - discovery-service
     ports:
       - "8080:8080"
-    networks:
-      - group-net
   shell-app:
     build: ./frontend/shell-app
     ports:
