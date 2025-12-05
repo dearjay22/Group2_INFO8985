@@ -34,10 +34,16 @@ services:
       - group-net
   shell-app:
     build: ./frontend/shell-app
-    ports: ["3000:3000"]
+    ports:
+      - "3000:80"      # Nginx serves on port 80 inside container
+    depends_on:
+      - api-gateway
   products-mf:
     build: ./frontend/products-mf
-    ports: ["3001:3001"]
+    ports:
+      - "3001:80"      # Nginx serves on port 80 inside container
+    depends_on:
+      - api-gateway
   prometheus:
     image: prom/prometheus
     volumes:
