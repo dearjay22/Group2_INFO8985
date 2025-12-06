@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: api-gateway
+
+# Gateway routes - forward to services by Docker service name / host and port.
+spring:
   cloud:
     gateway:
       routes:

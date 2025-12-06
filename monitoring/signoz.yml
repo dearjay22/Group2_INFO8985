@@ -1,10 +1,22 @@
-version: "3.9"
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
 
-services:
-  signoz:
-      image: signoz/signoz:latest
-          container_name: signoz-lite
-              ports:
-                    - "3301:3301"
-                        restart: always
-                        
+exporters:
+  logging:
+    loglevel: debug
+
+  otlp:
+    endpoint: "http://signoz:4317"
+    insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [logging]
+    metrics:
+      receivers: [otlp]
+      exporters: [logging]
