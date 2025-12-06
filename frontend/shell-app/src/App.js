@@ -14,7 +14,7 @@ function App() {
       <div>
         {path === "/products" ? (
           <iframe
-            src="http://localhost:3001/"
+            src="http://products-mf:3001/products"
             title="Products Microfrontend"
             style={{ width: "100%", height: "80vh" }}
           />

@@ -1,43 +1,143 @@
 version: '3.8'
+
+networks:
+  backend:
+
+volumes:
+  clickhouse-data:
+
 services:
+
   db:
     image: postgres:15
     environment:
       POSTGRES_DB: obsshop
       POSTGRES_USER: obsshop_user
       POSTGRES_PASSWORD: obsshop_pass
-    ports: ["5432:5432"]
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
   discovery-service:
     build: ./backend/discovery-service
-    ports: ["8761:8761"]
+    ports:
+      - "8761:8761"
+    networks:
+      - backend
+
   product-service:
     build: ./backend/product-service
-    depends_on: ["db","discovery-service"]
-    ports: ["8081:8081"]
+    depends_on:
+      - db
+      - discovery-service
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+
   order-service:
     build: ./backend/order-service
-    depends_on: ["db","discovery-service"]
-    ports: ["8082:8082"]
+    depends_on:
+      - db
+      - discovery-service
+    ports:
+      - "8082:8082"
+    networks:
+      - backend
+
   api-gateway:
     build: ./backend/api-gateway
-    depends_on: ["product-service", "order-service","discovery-service"]
-    ports: ["8080:8080"]
+    depends_on:
+      - product-service
+      - order-service
+      - discovery-service
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
   shell-app:
     build: ./frontend/shell-app
-    depends_on: ["api-gateway"]
-    ports: ["3000:80"]
+    ports:
+      - "3000:80"
+    networks:
+      - backend
+
   products-mf:
     build: ./frontend/products-mf
-    depends_on: ["api-gateway"]
-    ports: ["3001:80"]
+    ports:
+      - "3001:80"
+    networks:
+      - backend
+
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:latest
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-    ports: ["9090:9090"]
+    ports:
+      - "9090:9090"
+    networks:
+      - backend
+
   grafana:
-    image: grafana/grafana
-    ports: ["3002:3000"]
-  signoz:
-    image: signoz/signoz:latest
-    ports: ["3301:3301","4317:4317"]
+    image: grafana/grafana:latest
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - backend
+
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:22.3
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+    networks:
+      - backend
+    ports:
+      - "9000:9000"
+
+
+  signoz-query-service:
+    image: signoz/query-service:0.30.0
+    depends_on:
+      - clickhouse
+    ports:
+      - "8085:8085"
+    networks:
+      - backend
+
+
+  signoz-otel-collector:
+    image: signoz/signoz-otel-collector:latest
+    depends_on:
+      - signoz-query-service
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - backend
+
+ 
+  signoz-frontend:
+    image: signoz/frontend:0.19.0
+    ports:
+      - "3301:3301"
+    depends_on:
+      - signoz-query-service
+    networks:
+      - backend
+
+ 
+  k6:
+    image: grafana/k6
+    volumes:
+      - ./load-tests:/scripts
+    command: run /scripts/orders-load-test.js
+    depends_on:
+      - api-gateway
+    networks:
+      - backend
