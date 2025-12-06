@@ -32,5 +32,5 @@ jobs:
           docker build -t obsshop/api-gateway ./backend/api-gateway
           docker build -t obsshop/discovery-service ./backend/discovery-service
           docker build -t obsshop/products-mf ./frontend/products-mf
-          docker build -t obsshop/shell-app ./shell-app
+          docker build -t obsshop/shell-app ./frontend/shell-app
           
