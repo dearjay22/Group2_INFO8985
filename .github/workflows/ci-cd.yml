@@ -27,4 +27,10 @@ jobs:
           cd ../products-mf && npm ci && npm run build
       - name: Docker build
         run: |
-          docker compose up --build
+          docker build -t obsshop/product-service ./backend/product-service
+          docker build -t obsshop/order-service ./backend/order-service
+          docker build -t obsshop/api-gateway ./backend/api-gateway
+          docker build -t obsshop/discovery-service ./backend/discovery-service
+          docker build -t obsshop/products-mf ./frontend/products-mf
+          docker build -t obsshop/shell-app ./shell-app
+          
