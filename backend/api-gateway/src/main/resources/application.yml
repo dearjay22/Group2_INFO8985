@@ -12,11 +12,32 @@ spring:
           enabled: true
           lower-case-service-id: true
 
+      routes:
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - StripPrefix=1
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - StripPrefix=1
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
 eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery-service:8761/eureka/
-
 
 management:
   endpoints:

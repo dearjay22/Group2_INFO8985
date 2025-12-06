@@ -113,45 +113,6 @@ services:
     networks:
       - backend
 
-  # -------------------------------
-  # SIGNOZ STACK (working)
-  # -------------------------------
-
-  # Clickhouse Database
-  clickhouse:
-    image: clickhouse/clickhouse-server:latest
-    container_name: clickhouse
-    ports:
-      - "9000:9000"
-      - "8123:8123"
-    networks:
-      - backend
-
-  # SigNoz collector
-  signoz-collector:
-    image: signoz/signoz-otel-collector:latest
-    container_name: signoz-collector
-    depends_on:
-      - clickhouse
-    volumes:
-      - ./monitoring/signoz.yml:/etc/otel-collector-config.yaml
-    ports:
-      - "4317:4317"
-      - "4318:4318"
-    networks:
-      - backend
-
-  # SigNoz UI
-  signoz-frontend:
-    image: signoz/frontend:latest
-    container_name: signoz-frontend
-    ports:
-      - "3301:3301"
-    networks:
-      - backend
-    depends_on:
-      - signoz-collector
-
 networks:
   backend:
     driver: bridge
