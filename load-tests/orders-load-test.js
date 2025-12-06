@@ -10,7 +10,7 @@ export let options = {
 };
 
 export default function () {
-  const res = http.post('http://localhost:8080/orders', JSON.stringify({productId:1,quantity:1}), {
+  const res = http.post('http://api-gateway:8080/orders', JSON.stringify({productId:1,quantity:1}), {
     headers: { 'Content-Type': 'application/json' }
   });
   check(res, { 'status 200': (r) => r.status === 200 });

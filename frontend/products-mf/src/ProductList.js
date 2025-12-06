@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080";
+const API_BASE = process.env.REACT_APP_API_BASE || "http://api-gateway:8080";
 
 export default function ProductList(){
   const [products,setProducts] = useState([]);

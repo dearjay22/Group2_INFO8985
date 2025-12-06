@@ -5,7 +5,7 @@ function App() {
 
   // Fetch product list from backend API gateway or service
   useEffect(() => {
-    fetch("http://localhost:8081/products")
+    fetch("http://product-service:8081/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Error fetching products:", err));

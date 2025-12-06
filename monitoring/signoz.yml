@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  signoz:
+      image: signoz/signoz:latest
+          container_name: signoz-lite
+              ports:
+                    - "3301:3301"
+                        restart: always
+                        
