@@ -1,0 +1,4 @@
+[
+  {"id":1001,"productId":1,"qty":2,"status":"CREATED"},
+  {"id":1002,"productId":2,"qty":1,"status":"SHIPPED"}
+]

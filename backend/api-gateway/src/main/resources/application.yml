@@ -5,37 +5,28 @@ spring:
   application:
     name: api-gateway
 
-# Gateway routes - forward to services by Docker service name / host and port.
-spring:
   cloud:
     gateway:
-      routes:
-        - id: product-service
-          uri: http://product-service:8081
-          predicates:
-            - Path=/api/products/**, /products/**
-          filters:
-            - StripPrefix=1
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
 
-        - id: order-service
-          uri: http://order-service:8082
-          predicates:
-            - Path=/api/orders/**, /orders/**
-          filters:
-            - StripPrefix=1
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
 
-        - id: discovery-service
-          uri: http://discovery-service:8761
-          predicates:
-            - Path=/eureka/**, /discovery/**
-          filters:
-            - RewritePath=/discovery/(?<segment>.*), /$\\{segment}
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,env
+        include: "*"
   endpoint:
-    health:
-      show-details: always
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true

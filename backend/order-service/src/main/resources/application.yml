@@ -4,10 +4,13 @@ server:
 spring:
   application:
     name: order-service
+
   datasource:
-    url: jdbc:postgresql://db:5432/obsshop
-    username: obsshop_user
-    password: obsshop_pass
+    url: jdbc:h2:mem:ordersdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,11 +18,18 @@ spring:
 
 eureka:
   client:
-    service-url:
+    serviceUrl:
       defaultZone: http://discovery-service:8761/eureka/
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true

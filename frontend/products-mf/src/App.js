@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 function App() {
   const [products, setProducts] = useState([]);
 
-  // Fetch product list from backend API gateway or service
   useEffect(() => {
-    fetch("http://product-service:8081/products")
+    fetch("/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Error fetching products:", err));
