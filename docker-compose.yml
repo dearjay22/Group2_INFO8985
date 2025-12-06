@@ -130,14 +130,3 @@ services:
       - signoz-query-service
     networks:
       - backend
-
- 
-  k6:
-    image: grafana/k6
-    volumes:
-      - ./load-tests:/scripts
-    command: run /scripts/orders-load-test.js
-    depends_on:
-      - api-gateway
-    networks:
-      - backend

@@ -19,11 +19,12 @@ jobs:
         run: |
           cd backend/product-service && mvn -B clean package -DskipTests
           cd ../../backend/order-service && mvn -B clean package -DskipTests
+          cd ../../backend/api-gateway && mvn -B clean package -DskipTests
+          cd ../../backend/discovery-service && mvn -B clean package -DskipTests
       - name: Build frontend
         run: |
           cd frontend/shell-app && npm ci && npm run build
           cd ../products-mf && npm ci && npm run build
       - name: Docker build
         run: |
-          docker build -t obsshop/product-service ./backend/product-service
-          docker build -t obsshop/order-service ./backend/order-service
+          docker compose up --build
