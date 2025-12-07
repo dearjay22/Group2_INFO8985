@@ -21,6 +21,7 @@ function App() {
               <th>ID</th>
               <th>Name</th>
               <th>Price</th>
+              <th>Inventory</th>
             </tr>
           </thead>
 
@@ -30,6 +31,7 @@ function App() {
                 <td>{p.id}</td>
                 <td>{p.name}</td>
                 <td>${p.price}</td>
+                <td>{p.inventory}</td>
               </tr>
             ))}
           </tbody>

@@ -19,7 +19,7 @@ export default function ProductList(){
   return (
     <div>
       <h2>Products (microfrontend)</h2>
-      <ul>{products.map(p => <li key={p.id}>{p.name} - ${p.price} (stock {p.stock})</li>)}</ul>
+      <ul>{products.map(p => <li key={p.id}>{p.name} - ${p.price} (inventory {p.inventory})</li>)}</ul>
     </div>
   );
 }

@@ -10,7 +10,7 @@ public class Product {
   private Long id;
   private String name;
   private Double price;
-  private Integer stock;
+  private Integer inventory;
 
   public Product(){}
 
@@ -21,6 +21,6 @@ public class Product {
   public void setName(String n){ this.name=n;}
   public Double getPrice(){ return price;}
   public void setPrice(Double p){ this.price=p;}
-  public Integer getStock(){ return stock;}
-  public void setStock(Integer s){ this.stock=s;}
+  public Integer getInventory(){ return inventory;}
+  public void setInventory(Integer s){ this.inventory=s;}
 }
