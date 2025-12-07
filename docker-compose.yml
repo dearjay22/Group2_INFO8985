@@ -113,6 +113,31 @@ services:
     networks:
       - backend
 
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8088:8088"
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+    networks:
+      - backend
+      
+  k6:
+    image: grafana/k6:latest
+    container_name: k6-orders-test
+    depends_on:
+      - influxdb
+    volumes:
+      - ./load-tests/orders-load-test.js:/scripts/orders-load-test.js
+    entrypoint: ["k6", "run", "--out", "influxdb=http://influxdb:8086/k6", "/scripts/orders-load-test.js"]
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge
+
+
+volumes:
+  influxdb-data:
